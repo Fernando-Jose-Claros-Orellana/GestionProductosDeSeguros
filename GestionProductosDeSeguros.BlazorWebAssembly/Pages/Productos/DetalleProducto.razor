@@ -7,26 +7,28 @@
 
 <PageTitle>Detalle del Producto</PageTitle>
 
-<h1>Detalle del Producto</h1>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Detalle del Producto</h1>
 
-@if (producto == null)
-{
-    <p><em>Cargando...</em></p>
-}
-else
-{
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">@producto.Nombre</h5>
-            <p class="card-text"><strong>Descripción:</strong> @producto.Descripcion</p>
-            <p class="card-text"><strong>Tipo de Producto:</strong> @producto.TipoProductoNombre</p>
-            <p class="card-text"><strong>Forma de Pago:</strong> @producto.FormaPagoNombre</p>
-            <p class="card-text"><strong>Prima Anual:</strong> @producto.PrimaAnual.ToString("C", new System.Globalization.CultureInfo("en-US"))</p>
-            <p class="card-text"><strong>Suma Asegurada:</strong> @producto.SumaAsegurada.ToString("C", new System.Globalization.CultureInfo("en-US"))</p>
-            <button class="btn btn-primary" @onclick="Volver">Volver a la Lista</button>
+    @if (producto == null)
+    {
+        <div class="alert alert-info text-center"><em>Cargando...</em></div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@producto.Nombre</h5>
+                <p class="card-text"><strong>Descripción:</strong> @producto.Descripcion</p>
+                <p class="card-text"><strong>Tipo de Producto:</strong> @producto.TipoProductoNombre</p>
+                <p class="card-text"><strong>Forma de Pago:</strong> @producto.FormaPagoNombre</p>
+                <p class="card-text"><strong>Prima Anual:</strong> @producto.PrimaAnual.ToString("C", new System.Globalization.CultureInfo("en-US"))</p>
+                <p class="card-text"><strong>Suma Asegurada:</strong> @producto.SumaAsegurada.ToString("C", new System.Globalization.CultureInfo("en-US"))</p>
+                <button class="btn btn-primary" @onclick="Volver">Volver a la Lista</button>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>
 
 @code {
     [Parameter]

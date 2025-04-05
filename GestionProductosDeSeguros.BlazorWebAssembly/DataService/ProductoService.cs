@@ -11,26 +11,33 @@ namespace GestionProductosDeSeguros.BlazorWebAssembly.DataService
             _httpClient = httpCli.CreateClient("API");
         }
 
-        public async Task<List<ObtenerProductosDTO>> ObtenerProductos()
+        public async Task<List<BuscarProductosDTO>> ObtenerProductos()
         {
             var response = await _httpClient.GetAsync("Producto");
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadFromJsonAsync<List<ObtenerProductosDTO>>();
-                return result ?? new List<ObtenerProductosDTO>();
-            }
-            return new List<ObtenerProductosDTO>();
-        }
-
-        public async Task<List<BuscarProductosDTO>> BuscarPorNombre(string nombre)
-        {
-            var response = await _httpClient.GetAsync($"Producto/buscar");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<List<BuscarProductosDTO>>();
                 return result ?? new List<BuscarProductosDTO>();
             }
             return new List<BuscarProductosDTO>();
+        }
+
+        public async Task<List<BuscarProductosDTO>> BuscarPorNombre(string nombre = null)
+        {
+            if (string.IsNullOrEmpty(nombre))
+            {
+                return await ObtenerProductos();
+            }
+            else
+            {
+                var response = await _httpClient.GetAsync($"Producto/buscar?nombre={Uri.EscapeDataString(nombre)}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<List<BuscarProductosDTO>>();
+                    return result ?? new List<BuscarProductosDTO>();
+                }
+                return new List<BuscarProductosDTO>();
+            }
         }
 
         public async Task<ActualizaProductoDTO> ObtenerProductoId(int id)
@@ -44,10 +51,16 @@ namespace GestionProductosDeSeguros.BlazorWebAssembly.DataService
             return new ActualizaProductoDTO();
         }
 
-        public async Task<bool> CrearProducto(CrearProductoDTO producto)
+        public async Task<string> CrearProducto(CrearProductoDTO producto)
         {
             var response = await _httpClient.PostAsJsonAsync("Producto", producto);
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                return null; // Indica éxito
+            }
+
+            // Retorna el mensaje de error
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<bool> ActualizarProducto(ActualizaProductoDTO producto)

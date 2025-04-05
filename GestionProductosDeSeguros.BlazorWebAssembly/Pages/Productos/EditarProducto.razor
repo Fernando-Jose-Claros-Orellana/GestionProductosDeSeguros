@@ -8,66 +8,76 @@
 
 <PageTitle>Editar Producto</PageTitle>
 
-<h1>Editar Producto</h1>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Editar Producto</h1>
 
-@if (productoEditar == null)
-{
-    <p><em>Cargando...</em></p>
-}
-else
-{
-    <EditForm Model="@productoEditar" OnValidSubmit="@ActualizarProducto">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    @if (productoEditar == null)
+    {
+        <div class="alert alert-info text-center"><em>Cargando...</em></div>
+    }
+    else
+    {
+        <EditForm Model="@productoEditar" OnValidSubmit="@ActualizarProducto">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-        <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <InputText id="nombre" class="form-control" @bind-Value="productoEditar.Nombre" />
-        </div>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <InputText id="nombre" class="form-control" @bind-Value="productoEditar.Nombre" />
+                <ValidationMessage For="@(() => productoEditar.Nombre)" />
+            </div>
 
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción</label>
-            <InputTextArea id="descripcion" class="form-control" @bind-Value="productoEditar.Descripcion" />
-        </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <InputTextArea id="descripcion" class="form-control" @bind-Value="productoEditar.Descripcion" />
+                <ValidationMessage For="@(() => productoEditar.Descripcion)" />
+            </div>
 
-        <div class="mb-3">
-            <label for="tipoProductoId" class="form-label">Tipo de Producto</label>
-            <InputSelect id="tipoProductoId" class="form-select" @bind-Value="productoEditar.TipoProductoNombre">
-                <option value="">Seleccionar Tipo</option>
-                <option value="Auto">Auto</option>
-                <option value="Salud">Salud</option>
-                <option value="Vida">Vida</option>
-                <option value="Hogar">Accidentes Personales</option>
-                <option value="Residencial">Residencial</option>
-                <option value="Fianzas">Fianzas</option>
-            </InputSelect>
-        </div>
+            <div class="mb-3">
+                <label for="tipoProductoId" class="form-label">Tipo de Producto</label>
+                <InputSelect id="tipoProductoId" class="form-select" @bind-Value="productoEditar.TipoProductoNombre">
+                    <option value="">Seleccionar Tipo</option>
+                    <option value="Auto">Auto</option>
+                    <option value="Salud">Salud</option>
+                    <option value="Vida">Vida</option>
+                    <option value="Accidentes Personales">Accidentes Personales</option>
+                    <option value="Residencial">Residencial</option>
+                    <option value="Fianzas">Fianzas</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => productoEditar.TipoProductoNombre)" />
+            </div>
 
-        <div class="mb-3">
-            <label for="formaPagoId" class="form-label">Forma de Pago</label>
-            <InputSelect id="formaPagoId" class="form-select" @bind-Value="productoEditar.FormaPagoNombre">
-                <option value="">Seleccionar Forma de Pago</option>
-                <option value="Mensual">Mensual</option>
-                <option value="Trimestral">Trimestral</option>
-                <option value="Semestral">Semestral</option>
-                <option value="Anual">Anual</option>
-            </InputSelect>
-        </div>
+            <div class="mb-3">
+                <label for="formaPagoId" class="form-label">Forma de Pago</label>
+                <InputSelect id="formaPagoId" class="form-select" @bind-Value="productoEditar.FormaPagoNombre">
+                    <option value="">Seleccionar Forma de Pago</option>
+                    <option value="Mensual">Mensual</option>
+                    <option value="Trimestral">Trimestral</option>
+                    <option value="Semestral">Semestral</option>
+                    <option value="Anual">Anual</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => productoEditar.FormaPagoNombre)" />
+            </div>
 
-        <div class="mb-3">
-            <label for="primaAnual" class="form-label">Prima Anual</label>
-            <InputNumber id="primaAnual" class="form-control" @bind-Value="productoEditar.PrimaAnual" />
-        </div>
+            <div class="mb-3">
+                <label for="primaAnual" class="form-label">Prima Anual</label>
+                <InputNumber id="primaAnual" class="form-control" @bind-Value="productoEditar.PrimaAnual" />
+                <ValidationMessage For="@(() => productoEditar.PrimaAnual)" />
+            </div>
 
-        <div class="mb-3">
-            <label for="sumaAsegurada" class="form-label">Suma Asegurada</label>
-            <InputNumber id="sumaAsegurada" class="form-control" @bind-Value="productoEditar.SumaAsegurada" />
-        </div>
+            <div class="mb-3">
+                <label for="sumaAsegurada" class="form-label">Suma Asegurada</label>
+                <InputNumber id="sumaAsegurada" class="form-control" @bind-Value="productoEditar.SumaAsegurada" />
+                <ValidationMessage For="@(() => productoEditar.SumaAsegurada)" />
+            </div>
 
-        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-        <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
-    </EditForm>
-}
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+            </div>
+        </EditForm>
+    }
+</div>
 
 @code {
     [Parameter]
