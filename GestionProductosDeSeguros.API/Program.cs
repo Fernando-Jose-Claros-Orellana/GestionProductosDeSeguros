@@ -10,6 +10,14 @@ builder.Services.AddScoped<ProductoService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configurar servicios
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("https://localhost:7137")
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials());
+});
+
 var app = builder.Build();
 
 
@@ -22,6 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 
