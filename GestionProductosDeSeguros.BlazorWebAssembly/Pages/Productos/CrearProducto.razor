@@ -11,9 +11,8 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Crear Nuevo Producto</h1>
 
-    <EditForm Model="@nuevoProducto" OnValidSubmit="@GuardarProducto">
+    <EditForm Model="@nuevoProducto" OnValidSubmit="@ValidarSumaAsegurada">
         <DataAnnotationsValidator />
-        <ValidationSummary />
 
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
@@ -89,6 +88,18 @@
         {
             errorMessage = "No se puede crear un producto con el mismo nombre y tipo de producto";
             await js.InvokeVoidAsync("alert", errorMessage); // Muestra el mensaje de error
+        }
+    }
+
+    private async Task ValidarSumaAsegurada()
+    {
+        if (!nuevoProducto.IsSumaAseguradaValida())
+        {
+            await js.InvokeVoidAsync("alert", "La suma asegurada debe ser mayor a la prima anual.");
+        }
+        else
+        {
+            await GuardarProducto();
         }
     }
 

@@ -30,7 +30,13 @@ namespace GestionProductosDeSeguros.DTOs.ProductoDTOs
 
         [Required(ErrorMessage = "La Suma Asegurada es obligatoria.")]
         [DataType(DataType.Currency)]
-        [Range(0.01, double.MaxValue, ErrorMessage = "La Suma Asegurada debe ser mayor a 0.")]
+        [Range(typeof(decimal), "0", "9999999999", ErrorMessage = "La suma asegurada debe ser mayor a la prima anual.")]
         public decimal SumaAsegurada { get; set; }
+
+        // Validación personalizada
+        public bool IsSumaAseguradaValida()
+        {
+            return SumaAsegurada > PrimaAnual;
+        }
     }
 }

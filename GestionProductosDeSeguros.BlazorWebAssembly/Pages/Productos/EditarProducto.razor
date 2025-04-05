@@ -17,9 +17,8 @@
     }
     else
     {
-        <EditForm Model="@productoEditar" OnValidSubmit="@ActualizarProducto">
+        <EditForm Model="@productoEditar" OnValidSubmit="@ValidarSumaAsegurada">
             <DataAnnotationsValidator />
-            <ValidationSummary />
 
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
@@ -103,6 +102,18 @@
             {
                 await js.InvokeVoidAsync("alert", "No se pudo actualizar el producto.");
             }
+        }
+    }
+
+    private async Task ValidarSumaAsegurada()
+    {
+        if (!productoEditar.IsSumaAseguradaValida())
+        {
+            await js.InvokeVoidAsync("alert", "La suma asegurada debe ser mayor a la prima anual.");
+        }
+        else
+        {
+            await ActualizarProducto();
         }
     }
 
