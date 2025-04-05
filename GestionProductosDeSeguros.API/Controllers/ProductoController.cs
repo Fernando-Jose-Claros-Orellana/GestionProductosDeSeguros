@@ -23,6 +23,10 @@ namespace GestionProductosDeSeguros.API.Controllers
                 var productoId = Task.Run(() => _productoService.CrearProducto(crearProductoDTO));
                 return CreatedAtAction(nameof(ObtenerPorId), new { id = productoId }, productoId);
             }
+            catch (Exception ex) when (ex.Message.Contains("Ya existe un producto con el mismo nombre y tipo."))
+            {
+                return Conflict(ex.Message); // 409 Conflict
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
