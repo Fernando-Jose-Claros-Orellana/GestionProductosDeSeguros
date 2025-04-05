@@ -1,0 +1,46 @@
+﻿@page "/detalle-producto/{id:int}"
+@using GestionProductosDeSeguros.BlazorWebAssembly.DataService
+@using GestionProductosDeSeguros.DTOs.ProductoDTOs
+
+@inject ProductoService ProductoService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Detalle del Producto</PageTitle>
+
+<h1>Detalle del Producto</h1>
+
+@if (producto == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@producto.Nombre</h5>
+            <p class="card-text"><strong>Descripción:</strong> @producto.Descripcion</p>
+            <p class="card-text"><strong>Tipo de Producto:</strong> @producto.TipoProductoNombre</p>
+            <p class="card-text"><strong>Forma de Pago:</strong> @producto.FormaPagoNombre</p>
+            <p class="card-text"><strong>Prima Anual:</strong> @producto.PrimaAnual.ToString("C", new System.Globalization.CultureInfo("en-US"))</p>
+            <p class="card-text"><strong>Suma Asegurada:</strong> @producto.SumaAsegurada.ToString("C", new System.Globalization.CultureInfo("en-US"))</p>
+            <button class="btn btn-primary" @onclick="Volver">Volver a la Lista</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private ActualizaProductoDTO producto;
+
+    protected override async Task OnInitializedAsync()
+    {
+        producto = await ProductoService.ObtenerProductoId(Id);
+    }
+
+    private void Volver()
+    {
+        NavigationManager.NavigateTo("/lista-producto");
+    }
+}
