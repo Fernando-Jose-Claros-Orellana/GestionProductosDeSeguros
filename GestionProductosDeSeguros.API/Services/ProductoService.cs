@@ -36,6 +36,10 @@ namespace GestionProductosDeSeguros.API.Services
                         return Convert.ToInt32(result); // Conversión explícita de decimal a int
                     }
                 }
+                catch (SqlException ex) when (ex.Number == 2627) // 2627 es el código de error para violaciones de clave única
+                {
+                    throw new Exception("Ya existe un producto con el mismo nombre y tipo.");
+                }
                 catch (SqlException ex)
                 {
                     throw new Exception($"Error en la base de datos: {ex.Message}");
@@ -44,9 +48,9 @@ namespace GestionProductosDeSeguros.API.Services
             }
         }
 
-        public List<ObtenerProductosDTO> ObtenerProductos()
+        public List<BuscarProductosDTO> ObtenerProductos()
         {
-            List<ObtenerProductosDTO> productos = new List<ObtenerProductosDTO>();
+            List<BuscarProductosDTO> productos = new List<BuscarProductosDTO>();
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
@@ -57,7 +61,7 @@ namespace GestionProductosDeSeguros.API.Services
                     {
                         while (reader.Read())
                         {
-                            var producto = new ObtenerProductosDTO
+                            var producto = new BuscarProductosDTO
                             {
                                 Id = Convert.ToInt32(reader["ProductoId"]),
                                 Nombre = reader["Nombre"].ToString(),

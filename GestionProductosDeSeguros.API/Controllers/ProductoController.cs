@@ -30,7 +30,7 @@ namespace GestionProductosDeSeguros.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ObtenerProductosDTO>> ObtenerProductos()
+        public ActionResult<List<BuscarProductosDTO>> ObtenerProductos()
         {
             var productos = _productoService.ObtenerProductos();
             return Ok(productos);
@@ -44,7 +44,7 @@ namespace GestionProductosDeSeguros.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ObtenerProductosDTO> ObtenerPorId(int id)
+        public ActionResult<BuscarProductosDTO> ObtenerPorId(int id)
         {
             var producto = _productoService.ObtenerProductoPorId(id);
             if (producto == null)
