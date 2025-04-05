@@ -14,22 +14,23 @@ namespace GestionProductosDeSeguros.DTOs.ProductoDTOs
         [StringLength(100, ErrorMessage = "El Nombre no puede exceder los 100 caracteres.")]
         public string Nombre { get; set; }
 
+        [Required(ErrorMessage = "La Descripción es obligatoria.")]
         public string Descripcion { get; set; }
 
         [Required(ErrorMessage = "El Tipo de Producto es obligatorio.")]
-        [StringLength(100, ErrorMessage = "El Tipo de Producto no puede exceder los 100 caracteres.")]
         public string TipoProductoNombre { get; set; }
 
         [Required(ErrorMessage = "La Forma de Pago es obligatoria.")]
-        [StringLength(50, ErrorMessage = "La Forma de Pago no puede exceder los 50 caracteres.")]
         public string FormaPagoNombre { get; set; }
 
         [Required(ErrorMessage = "La Prima Anual es obligatoria.")]
         [DataType(DataType.Currency)]
+        [Range(0.01, 300, ErrorMessage = "La Prima Anual debe ser mayor a 0 y no puede exceder 300.")]
         public decimal PrimaAnual { get; set; }
 
         [Required(ErrorMessage = "La Suma Asegurada es obligatoria.")]
         [DataType(DataType.Currency)]
+        [Range(0.01, double.MaxValue, ErrorMessage = "La Suma Asegurada debe ser mayor a 0.")]
         public decimal SumaAsegurada { get; set; }
     }
 }
